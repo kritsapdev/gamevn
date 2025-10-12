@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="line:miniapp:version" content="1.0.0">
+  <title>First Day Abroad</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    #score {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0277bd;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px dashed #b3e5fc;
+    }
+    .scene { display: none; }
+    .active { display: block; }
+    h2 {
+      color: #01579b;
+      margin-top: 0;
+    }
+    p {
+      line-height: 1.6;
+      color: #37474f;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    button:hover {
+      transform: scale(1.02);
+    }
+    .correct {
+      background: linear-gradient(to right, #4caf50, #2e7d32);
+      color: white;
+    }
+    .incorrect {
+      background: linear-gradient(to right, #ff9800, #f57c00);
+      color: white;
+    }
+    #summary h2 {
+      color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="score">แต้ม: 0</div>
+
+    <!-- Scene 1: Airport -->
+    <div id="scene1" class="scene active">
+      <h2>✈️ สนามบิน</h2>
+      <p>พนักงานตรวจคนเข้าเมืองยิ้มแล้วพูด:<br><strong>“May I see your passport?”</strong></p>
+      <button class="correct" onclick="choose(1, true)">Here you go!</button>
+      <button class="correct" onclick="choose(1, true)">Here you are!</button>
+      <button class="incorrect" onclick="choose(1, false)">Yes, I have.</button>
+      <button class="incorrect" onclick="choose(1, false)">Thank you!</button>
+    </div>
+
+    <!-- Scene 2: Airplane -->
+    <div id="scene2" class="scene">
+      <h2>🛫 บนเครื่องบิน</h2>
+      <p>คนนั่งข้างๆ หันมาถาม:<br><strong>“Is this your first time abroad?”</strong></p>
+      <button class="correct" onclick="choose(2, true)">Yes! I’m so excited!</button>
+      <button class="correct" onclick="choose(2, true)">Yes, it is!</button>
+      <button class="incorrect" onclick="choose(2, false)">No, I go many time.</button>
+      <button class="incorrect" onclick="choose(2, false)">I don’t know.</button>
+    </div>
+
+    <!-- Scene 3: Cafe -->
+    <div id="scene3" class="scene">
+      <h2>☕ ร้านกาแฟ</h2>
+      <p>พนักงานยิ้มแล้วถาม:<br><strong>“Are you ready to order?”</strong></p>
+      <button class="correct" onclick="choose(3, true)">I’ll have a latte, please.</button>
+      <button class="correct" onclick="choose(3, true)">I’d like a coffee, please.</button>
+      <button class="incorrect" onclick="choose(3, false)">Give me coffee.</button>
+      <button class="incorrect" onclick="choose(3, false)">I want drink.</button>
+    </div>
+
+    <!-- Summary -->
+    <div id="summary" class="scene">
+      <h2>🎉 สรุปวันแรกในต่างประเทศ!</h2>
+      <p id="final-score">แต้มรวม: 0</p>
+      <p>คุณเรียนรู้ประโยคสำคัญ 3 แบบ:<br>
+        • การส่งเอกสาร<br>
+        • การตอบคำถามทั่วไป<br>
+        • การสั่งอาหารอย่างสุภาพ
+      </p>
+      <button class="correct" onclick="restart()">เล่นอีกครั้ง</button>
+    </div>
+  </div>
+
+  <script>
+    // โหลดแต้มจาก localStorage
+    let score = localStorage.getItem('fdab_score') ? parseInt(localStorage.getItem('fdab_score')) : 0;
+    document.getElementById('score').innerText = `แต้ม: ${score}`;
+    document.getElementById('final-score').innerText = `แต้มรวม: ${score}`;
+
+    function choose(scene, isCorrect) {
+      if (isCorrect) {
+        score += 10;
+        localStorage.setItem('fdab_score', score);
+        alert("✅ ถูกต้อง! คุณพูดเหมือนเจ้าของภาษาเลย!");
+      } else {
+        alert("💡 เกือบได้แล้ว! ลองเลือกคำตอบที่สุภาพกว่านี้นะ");
+        return;
+      }
+
+      // เปลี่ยนฉาก
+      document.querySelector('.active').classList.remove('active');
+      if (scene === 1) document.getElementById('scene2').classList.add('active');
+      else if (scene === 2) document.getElementById('scene3').classList.add('active');
+      else if (scene === 3) {
+        document.getElementById('summary').classList.add('active');
+        document.getElementById('final-score').innerText = `แต้มรวม: ${score}`;
+      }
+
+      document.getElementById('score').innerText = `แต้ม: ${score}`;
+    }
+
+    function restart() {
+      score = 0;
+      localStorage.setItem('fdab_score', 0);
+      document.getElementById('score').innerText = `แต้ม: 0`;
+      document.getElementById('summary').classList.remove('active');
+      document.getElementById('scene1').classList.add('active');
+    }
+  </script>
+</body>
+</html>
