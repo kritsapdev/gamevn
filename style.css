@@ -114,3 +114,13 @@ body {
         opacity: 1;
     }
 }
+
+/* Add this to the end of your style.css file */
+.clickable-audio {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.npc-message.clickable-audio:hover {
+    background-color: #e0e0e0; /* Slightly darker background on hover */
+}
