@@ -3,69 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Day Abroad</title>
+    <title>First Day Abroad - Chat Mode</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div id="game-container">
-        <div class="scene" id="scene-1">
-            <h2>🌍 ฉาก 1: สนามบิน (Airport Check-in)</h2>
-            <p>“Good morning! May I see your passport, please?”</p>
-            <div class="options">
-                <button onclick="selectAnswer(10, '✅ Perfect! You sound polite and confident!')">Here you go!</button>
-                <button onclick="selectAnswer(10, '✅ Great! Native speakers say this too!')">Here you are!</button>
-                <button onclick="selectAnswer(0, '💡 Almost! But we usually say ‘Here you go!’ when giving something.')">Yes, I have.</button>
-                <button onclick="selectAnswer(0, '💡 That’s polite, but the officer asked for your passport. Try ‘Here you go!’ next time.')">Thank you!</button>
+    <div id="chat-container">
+        <div id="header">
+            <h2>First Day Abroad 🇬🇧</h2>
+        </div>
+        <div id="message-list">
             </div>
-        </div>
-
-        <div class="scene hidden" id="scene-2">
-            <h2>✈️ ฉาก 2: บนเครื่องบิน (In-Flight Conversation)</h2>
-            <p>“Hi! Is this your first time abroad?”</p>
-            <div class="options">
-                <button onclick="selectAnswer(10, '✅ Awesome! Your energy is contagious!')">Yes! I’m so excited!</button>
-                <button onclick="selectAnswer(10, '✅ Clear and natural! Well done!')">Yes, it is!</button>
-                <button onclick="selectAnswer(0, '💡 Nice try! Correct: ‘No, I’ve been abroad many times.’')">No, I go many time.</button>
-                <button onclick="selectAnswer(0, '💡 Hmm, you know if it’s your first time! Try ‘Yes!’ or ‘No!’ with a smile.')">I don’t know.</button>
+        <div id="options-container">
             </div>
-        </div>
-
-        <div class="scene hidden" id="scene-3">
-            <h2>☕ ฉาก 3: ร้านกาแฟ (Ordering at a Café)</h2>
-            <p>“Hi there! Are you ready to order?”</p>
-            <div class="options">
-                <button onclick="selectAnswer(10, '✅ Perfect! Polite and natural.')">I’ll have a latte, please.</button>
-                <button onclick="selectAnswer(10, '✅ Excellent! This is how natives order.')">I’d like a coffee, please.</button>
-                <button onclick="selectAnswer(0, '💡 Ouch! Sounds rude. Always add ‘please’ and use ‘I’d like…’')">Give me coffee.</button>
-                <button onclick="selectAnswer(0, '💡 Close! Say: ‘I’d like a drink, please.’')">I want drink.</button>
-            </div>
-        </div>
-        
-        <div class="scene hidden" id="scene-4">
-            <h2>🗺️ ฉาก 4: ถามทาง (Asking for Directions)</h2>
-            <p>(คุณต้องเริ่มพูดเอง)</p>
-            <div class="options">
-                <button onclick="selectAnswer(10, '✅ Perfect! ‘Excuse me’ is the magic phrase!')">Excuse me, how can I get to the subway station?</button>
-                <button onclick="selectAnswer(10, '✅ Very polite! British people love this phrase.')">Could you tell me where the station is?</button>
-                <button onclick="selectAnswer(0, '💡 Too short! Say: ‘Where is the subway station?’')">Where subway?</button>
-                <button onclick="selectAnswer(0, '💡 Not clear. Always start with ‘Excuse me’ and use full sentences.')">Station please.</button>
-            </div>
-        </div>
-
-        <div class="scene hidden" id="scene-5">
-            <h2>🌟 สรุปวันแรกของคุณในลอนดอน!</h2>
-            <p>แต้มรวมของคุณ: <strong id="final-score">0</strong>/40</p>
-            <p>คุณได้เรียนรู้ทักษะสำคัญในการใช้ชีวิตวันแรกในต่างประเทศแล้ว!</p>
-            <button onclick="restartGame()">เล่นอีกครั้ง</button>
-        </div>
-        
-        <div id="feedback-box" class="hidden">
-            <p id="feedback-text"></p>
-            <button id="next-button">ต่อไป</button>
-        </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
