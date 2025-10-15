@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Game data now includes an 'audio' property for each npcMessage
     const gameData = [
         {
-            npcMessage: "🌍 Good morning! May I see your passport, please?",
+            npcMessage: { 
+                text: "🌍 Good morning! May I see your passport, please?", 
+                audio: "airport_greeting.wav" 
+            },
             options: [
                 { text: "Here you go!", score: 10, feedback: "✅ Perfect! You sound polite and confident!" },
                 { text: "Here you are!", score: 10, feedback: "✅ Great! Native speakers say this too!" },
@@ -10,7 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            npcMessage: "✈️ Hi! Is this your first time abroad?",
+            npcMessage: { 
+                text: "✈️ Hi! Is this your first time abroad?", 
+                audio: "inflight_question.wav" 
+            },
             options: [
                 { text: "Yes! I’m so excited!", score: 10, feedback: "✅ Awesome! Your energy is contagious!" },
                 { text: "Yes, it is!", score: 10, feedback: "✅ Clear and natural! Well done!" },
@@ -19,7 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            npcMessage: "☕ Hi there! Are you ready to order?",
+            npcMessage: { 
+                text: "☕ Hi there! Are you ready to order?", 
+                audio: "cafe_order.wav" 
+            },
             options: [
                 { text: "I’ll have a latte, please.", score: 10, feedback: "✅ Perfect! Polite and natural." },
                 { text: "I’d like a coffee, please.", score: 10, feedback: "✅ Excellent! This is how natives order." },
@@ -28,7 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            npcMessage: "🗺️ You're lost! How do you ask for directions?",
+            npcMessage: { 
+                text: "🗺️ You're lost! How do you ask for directions?", 
+                audio: "directions_intro.wav" 
+            },
             options: [
                 { text: "Excuse me, how can I get to the subway station?", score: 10, feedback: "✅ Perfect! ‘Excuse me’ is the magic phrase!" },
                 { text: "Could you tell me where the station is?", score: 10, feedback: "✅ Very polite! British people love this phrase." },
@@ -45,10 +58,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let score = 0;
     let isWaitingForUser = false;
 
-    function displayMessage(text, type) {
+    // NEW function to play audio
+    function playAudio(filename) {
+        if (!filename) return;
+        const audio = new Audio(`audio/${filename}`);
+        audio.play().catch(error => console.error("Error playing audio:", error));
+    }
+
+    // MODIFIED displayMessage function
+    function displayMessage(text, type, audioFile = null) {
         const messageElement = document.createElement('div');
         messageElement.className = `message ${type}-message`;
         messageElement.innerHTML = text;
+        
+        // If it's an NPC message with audio, make it clickable
+        if (type === 'npc' && audioFile) {
+            messageElement.classList.add('clickable-audio');
+            messageElement.onclick = () => playAudio(audioFile);
+        }
+        
         messageList.appendChild(messageElement);
         messageList.scrollTop = messageList.scrollHeight;
     }
@@ -110,7 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function startScene(index) {
         const scene = gameData[index];
         setTimeout(() => {
-            displayMessage(scene.npcMessage, 'npc');
+            // Pass the text and audio filename to the displayMessage function
+            displayMessage(scene.npcMessage.text, 'npc', scene.npcMessage.audio);
             setTimeout(() => {
                 displayOptions(scene.options);
             }, 1000);
