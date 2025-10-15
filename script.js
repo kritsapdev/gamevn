@@ -47,8 +47,9 @@ let isWaitingForUser = false;
 function displayMessage(text, type) {
     const messageElement = document.createElement('div');
     messageElement.className = `message ${type}-message`;
-    messageElement.innerHTML = text; // Use innerHTML to render emojis
+    messageElement.innerHTML = text; // Use innerHTML to render emojis and bold tags
     messageList.appendChild(messageElement);
+    // Auto-scroll to the latest message
     messageList.scrollTop = messageList.scrollHeight;
 }
 
@@ -116,5 +117,5 @@ function startScene(index) {
     }, 500);
 }
 
-// Start the game
+// Start the game when the script loads
 startScene(currentSceneIndex);
